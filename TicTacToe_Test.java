@@ -3,8 +3,7 @@ import java.util.Scanner;
 public class TicTacToe_Test {
 	public static void main(String[] args) {
 		TicTacToe game = new TicTacToe();
-		//int[][] board = game.getBoard();
-		//String boardStr;
+
 		Scanner s = new Scanner(System.in);
 		int spot;
 		int x, y;
@@ -25,6 +24,7 @@ public class TicTacToe_Test {
 		
 		if(gameStatus == 1) {
 			System.out.println("GAME OVER! Player " + game.whoWon() + " won!");
+			System.out.println(game.getBoardStr());
 		}
 		else {
 			System.out.println("The game is a tie!");
