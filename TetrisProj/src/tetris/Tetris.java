@@ -1,43 +1,122 @@
 package tetris;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.util.Random;
 
-public class Tetris extends JFrame{
-	/**
-	 * 
-	 */
-	//private static final long serialVersionUID = 1L;
-	private JLabel statusbar;
-	
-	public Tetris(){
-		initUI();
+public class Shape {
+	protected enum Tetrominoe {
+		NoShape, iShape, oShape, tShape, sShape, zShape, jShape, lShape
 	}
 	
-	private void initUI(){
-		statusbar = new JLabel(" 0");
-		add(statusbar, BorderLayout.SOUTH);
+	private Tetrominoe pieceShape;
+	private int coords[][];
+	private int [][][] coordsTable;
+	
+	public Shape(){
+		initShape();
+	}
+	
+	private void initShape() {
+		coords = new int [4][2];
 		
-		Board board = new Board(this);
-		add(board);
-		board.start();
+		coordsTable = new int [][][] {
+			{{0, 0}, {0, 0}, {0, 0}, {0, 0}}, 
+			{{0, -1}, {0, 0}, {-1, 0}, {-1, 0}},
+			{{0, -1}, {0, 0}, {1, 0}, {1, 1}},
+			{{0, -1}, {0, 0}, {0, 1}, {0, 2}},
+			{{-1, 0}, {0, 0}, {1, 0}, {0, 1}},
+			{{0, 0}, {1, 0}, {0, 1}, {1, 1}},
+			{{-1, -1}, {0, -1}, {0, 0}, {0, 1}},
+			{{1, -1}, {0, -1}, {0, 0}, {0, 1}}
+		};
 		
-		setTitle("Tetris");
-		setSize(200, 400);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setShape(Tetrominoe.NoShape);
 	}
 	
-	public JLabel getStatusBar(){
-		return statusbar;
+	protected void setShape(Tetrominoe shape){
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 2; j++) {
+				coords[i][j] = coordsTable[shape.ordinal()][i][j];
+			}
+		}
+		
+		pieceShape = shape;
 	}
 	
-	public static void main(String[] args){
-		EventQueue.invokeLater(() -> {
-			Tetris game = new Tetris();
-			game.setVisible(true);
-		});
+	
+	private void setX(int index, int x){
+		coords [index][0] = x;
 	}
+	
+	private void setY(int index, int y){
+		coords [index][1] = y;
+	}
+	
+	public int x(int index){
+		return coords[index][0];
+	}
+	
+	public int y(int index){
+		return coords[index][1];
+	}
+	
+	public Tetrominoe getShape(){
+		return pieceShape;
+	}
+	
+	void setRandomShape(){
+		Random r = new Random();
+		int x = Math.abs(r.nextInt()) % 7 + 1;
+		
+		Tetrominoe[] values = Tetrominoe.values();
+		setShape(values[x]);
+	}
+	
+	public int minX(){
+		int m = coords[0][0];
+		
+		for (int i = 0; i < 4; i++){
+			m = Math.min(m, coords[i][0]);
+		}
+		return m;
+	}
+	
+	public int minY(){
+		int m = coords[0][1];
+		
+		for (int i = 0; i < 4; i++){
+			m = Math.min(m, coords[i][1]);
+		}
+		return m;
+	}
+	
+	Shape rotateLeft(){
+		if (pieceShape == Tetrominoe.oShape){
+			return this;
+		}
+		
+		Shape result = new Shape();
+		result.pieceShape = pieceShape;
+		
+		for (int i = 0; i < 4; i++){
+			result.setX(i, y(i));
+			result.setY(i, -x(i));
+		}
+		return result;
+	}
+	
+	Shape rotateRight(){
+		if (pieceShape == Tetrominoe.oShape){
+			return this;
+		}
+		
+		Shape result = new Shape();
+		result.pieceShape = pieceShape;
+		
+		for (int i = 0; i < 4; i++){
+			result.setX(i, -y(i));
+			result.setY(i, x(i));
+		}
+		return result;
+	}
+	
 }
