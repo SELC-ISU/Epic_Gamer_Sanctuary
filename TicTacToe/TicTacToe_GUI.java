@@ -1,3 +1,4 @@
+package TicTacToe;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -19,7 +20,7 @@ public class TicTacToe_GUI {
 		
 		
 		frame = new JFrame("Tic Tac Toe");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(300,300);
 		
 		label = new JLabel("Player " + turn + " it is your turn");

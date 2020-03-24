@@ -1,11 +1,9 @@
+package ConnectFour;
 
 public class ConnectFour {
 	 
 	private char[][] board = new char[6][7]; //6 rows; 7 columns
 	private int turn;
-	
-	private int lastRow;
-	private int lastColumn;
 		
 	
 	public ConnectFour() {
@@ -39,9 +37,6 @@ public class ConnectFour {
 					else if(turn == 2) {
 						turn = 1;
 					}
-					
-					lastRow = i;
-					lastColumn = column;
 					
 					return true;
 				}
@@ -90,35 +85,70 @@ public class ConnectFour {
 			}
 		}
 		
-		// check diagonal
+		// check 1 diagonal
+		for(int j = 0; j < 3; j++) {
+			for(int k = 0; k < 4; k++) {
+				if(board[j][k] != '*') {
+					c= board[j][k];
+					int count = 0;
+					
+					for(int i = 0; i < 4; i++) {
+						if(board[j+i][k+i] == c) {
+							count++;
+						}
+					}
+					
+					if(count == 4) {
+						return 1;
+					}
+				}
+			}
+		}
+		
+		// check other diagonal
+		for(int j = 0; j < 3; j++) {
+			for(int k = 0; k < 4; k++) {
+				if(board[j+3][k] != '*') {
+					c= board[j+3][k];
+					int count = 0;
+					
+					for(int i = 0; i < 4; i++) {
+						if(board[j+3-i][k+i] == c) {
+							count++;
+						}
+					}
+					
+					if(count == 4) {
+						return 1;
+					}
+				}
+			}
+		}
+		
+		/*
 		if(board[2][0] == board[3][1] && board[4][2] == board[5][3] && board[3][1] == board[4][2] && board[2][0] != '*' ||
 			board[1][0] == board[2][1] && board[3][2] == board[4][3] && board[2][1] == board[3][2] && board[1][0] != '*' ||
 			board[2][1] == board[3][2] && board[4][3] == board[5][4] && board[3][2] == board[4][3] && board[2][1] != '*' ||
 			board[0][0] == board[1][1] && board[2][2] == board[3][3] && board[1][1] == board[2][2] && board[0][0] != '*' ||
 			board[1][1] == board[2][2] && board[3][3] == board[4][4] && board[2][2] == board[3][3] && board[1][1] != '*' ||
-			board[2][2] == board[3][3] && board[4][4] == board[5][5] && board[3][3] == board[4][4] && board[2][2] != '*' ||
-				
-				
-				
+			board[2][2] == board[3][3] && board[4][4] == board[5][5] && board[3][3] == board[4][4] && board[2][2] != '*' 
+			// hardcoding diagonals is STUPID!!	
 				) {
 			return 1;
 		}
-		else {
-			int empty = 0;
-			for(int i = 0; i < board.length; i++) {
-				for(int j = 0; j < board[i].length; j++) {
-					if(board[i][j] == '*') {
-						empty++;
-					}
+		*/
+		
+		//tests for open spots left
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				if(board[i][j] == '*') {
+					return 0;
 				}
 			}
-			
-			if(empty == 0) {
-				return 2;
-			}
 		}
-		
-		return 0;
+			
+		//tie
+		return 2;
 	}
 	
 	public int whoWon() {
@@ -132,6 +162,10 @@ public class ConnectFour {
 	
 	public char[][] getBoard() {
 		return board;
+	}
+	
+	public String getBoardSpot(int row, int col) {
+		return board[row][col] + "";
 	}
 	
 	public String getBoardStr() {
@@ -150,5 +184,17 @@ public class ConnectFour {
 	
 	public int getTurn() {
 		return turn;
+	}
+	
+	public void setBoard(char[][] testBoard) {
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				board[i][j] = testBoard[i][j];
+			}
+		}
+	}
+	
+	public void setSpot(int row, int col) {
+		board[row][col] = 'T';
 	}
 }
