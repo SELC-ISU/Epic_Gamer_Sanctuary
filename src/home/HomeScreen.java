@@ -4,8 +4,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import TicTacToe.TicTacToe_GUI;
-import ConnectFour.ConnectFour_GUI;
+import connectfour.ConnectFour_GUI;
+import tictactoe.TicTacToe_GUI;
 
 public class HomeScreen  {
 	

@@ -1,4 +1,4 @@
-package ConnectFour;
+package connectfour;
 import java.util.Scanner;
 
 public class ConnectFourTest {

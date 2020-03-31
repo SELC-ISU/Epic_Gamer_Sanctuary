@@ -1,4 +1,4 @@
-package ConnectFour;
+package connectfour;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,4 +1,4 @@
-package ConnectFour;
+package connectfour;
 
 public class ConnectFour {
 	 

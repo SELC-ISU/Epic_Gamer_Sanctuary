@@ -1,4 +1,4 @@
-package Yahtzee;
+package yahtzee;
 
 import java.util.Arrays;
 

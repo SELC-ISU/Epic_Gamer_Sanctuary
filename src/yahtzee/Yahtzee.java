@@ -1,4 +1,4 @@
-package Yahtzee;
+package yahtzee;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -97,6 +97,7 @@ public class Yahtzee {
 	public void round() {				
 		roll();
 		System.out.println(printDice());
+		System.out.println(Arrays.toString(toRoll));
 		disable();
 		
 		roll();
@@ -276,7 +277,7 @@ public class Yahtzee {
 
 	private boolean isFullHouse() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 
