@@ -7,10 +7,6 @@ import javax.swing.*;
 
 public class ConnectFour_GUI {
 	
-	public static void main(String[] args) {
-		ConnectFour_GUI test = new ConnectFour_GUI();
-	}
-	
 	JFrame frame;
 	JButton button1, button2, button3, button4, button5, button6, button7;
 	JLabel label;

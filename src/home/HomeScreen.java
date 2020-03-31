@@ -1,4 +1,4 @@
-package Main;
+package home;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -7,11 +7,11 @@ import javax.swing.*;
 import TicTacToe.TicTacToe_GUI;
 import ConnectFour.ConnectFour_GUI;
 
-public class Main_GUI_Testing  {
+public class HomeScreen  {
 	
 	public static void main(String[] args) {
 		System.out.println("Test");
-		Main_GUI_Testing test = new Main_GUI_Testing();
+		HomeScreen test = new HomeScreen();
 	}
 	
 	public static CardLayout mainScreen = new CardLayout(40,30);
@@ -20,7 +20,7 @@ public class Main_GUI_Testing  {
 	JButton b1, b2;
 	JPanel panel;
 	
-	public Main_GUI_Testing() {
+	public HomeScreen() {
 		//c = getContentPane();
 		
 		frame = new JFrame("Game Center");
