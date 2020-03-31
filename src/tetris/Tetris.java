@@ -418,7 +418,7 @@ public class Tetris extends JFrame{
 	
 	public static void main(String[] args){
 		EventQueue.invokeLater(() -> {
-			var game = new Tetris();
+			Tetris game = new Tetris();
 			game.setVisible(true);
 		});
 	}

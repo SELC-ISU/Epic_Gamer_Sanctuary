@@ -9,7 +9,6 @@ public class Yahtzee {
 	private int[] dice;
 	private boolean[] toRoll;
 	
-	private int rolls;
 	private int round;
 	
 	private int[] scorecard;
@@ -22,7 +21,6 @@ public class Yahtzee {
 		for(int i = 0; i < 5; i++) {
 			toRoll[i] = true;
 		}
-		rolls = 0;
 		round = 1;
 		scorecard = new int[13];
 		
@@ -97,21 +95,26 @@ public class Yahtzee {
 	}
 	
 	public void round() {				
-		while(rolls < 3) {
-			roll();
-			if(testPrint) {
-				System.out.println(printDice());
-			}
-			
-			disable();
-			
-			rolls++;
-		}
+		roll();
+		System.out.println(printDice());
+		disable();
+		
+		roll();
+		System.out.println(printDice());
+		disable();
+		
+		roll();
+		System.out.println(printDice());
 		
 		score();
 		
 		round++;
+		
 		dice = new int[5];
+		toRoll = new boolean[5];
+		for(int i = 0; i < 5; i++) {
+			toRoll[i] = true;
+		}
 		
 		if(round == 13) {
 			endGame();
@@ -131,11 +134,16 @@ public class Yahtzee {
 	private void disable() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("What dice to not roll again? ");
-		String s = scan.next();
+		String s = scan.nextLine();
 		scan = new Scanner(s);
 		
 		while(scan.hasNextInt()) {
-			switchToRoll(scan.nextInt());
+			if(scan.nextInt() == 0) {
+				break;
+			}
+			else {
+				switchToRoll(scan.nextInt() - 1);
+			}
 		}
 		
 		scan.close();
@@ -213,6 +221,7 @@ public class Yahtzee {
 				System.out.println("ERROR");
 		}
 		
+		System.out.println("Line score: " + scorecard[spot-1] + "\n");
 	}
 
 
