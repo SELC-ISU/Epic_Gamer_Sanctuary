@@ -10,7 +10,6 @@ import tictactoe.TicTacToe_GUI;
 public class HomeScreen  {
 	
 	public static void main(String[] args) {
-		System.out.println("Test");
 		HomeScreen test = new HomeScreen();
 	}
 	

@@ -36,6 +36,10 @@ public class Yahtzee {
 		return total;
 	}
 	
+	public boolean[] getToRoll() {
+		return toRoll;
+	}
+	
 	public int getUpperSection() {
 		int total = 0;
 		for(int i = 0; i < 6; i++) {
@@ -102,6 +106,7 @@ public class Yahtzee {
 		
 		roll();
 		System.out.println(printDice());
+		System.out.println(Arrays.toString(toRoll));
 		disable();
 		
 		roll();
@@ -132,22 +137,26 @@ public class Yahtzee {
 		}
 	}
 	
-	private void disable() {
+	public void disable() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("What dice to not roll again? ");
 		String s = scan.nextLine();
-		scan = new Scanner(s);
+		Scanner scan2 = new Scanner(s);
 		
-		while(scan.hasNextInt()) {
-			if(scan.nextInt() == 0) {
+		//System.out.println(s);
+		
+		while(scan2.hasNextInt()) {
+			int value = scan2.nextInt() - 1;
+			if(value < 0) {
 				break;
 			}
 			else {
-				switchToRoll(scan.nextInt() - 1);
+				switchToRoll(value);
 			}
 		}
 		
-		scan.close();
+		//scan.close();
+		//scan2.close();
 	}
 	
 	private void switchToRoll(int num) {
@@ -171,8 +180,8 @@ public class Yahtzee {
 		System.out.println("Where to score this roll? (1-13) ");
 		int spot = scan.nextInt();
 		
-		//Upper Section
 		switch(spot) {
+		//Upper Section
 			case 1:
 			case 2:
 			case 3:
@@ -185,6 +194,7 @@ public class Yahtzee {
 					}
 				}
 				break;
+		//Lower Section
 			case 7:
 				if(isThreeOfAKind()) {
 					scorecard[6] = getDiceTotal();
@@ -221,6 +231,8 @@ public class Yahtzee {
 			default:
 				System.out.println("ERROR");
 		}
+		
+		scan.close();
 		
 		System.out.println("Line score: " + scorecard[spot-1] + "\n");
 	}
@@ -276,8 +288,8 @@ public class Yahtzee {
 
 
 	private boolean isFullHouse() {
-		// TODO Auto-generated method stub
-		return true;
+		sortDice();
+		return (dice[0] == dice[1] && dice[3] == dice[4] && (dice[2] == dice[1] || dice[2] == dice[3]));
 	}
 
 
