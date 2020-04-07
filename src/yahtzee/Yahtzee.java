@@ -40,6 +40,10 @@ public class Yahtzee {
 		return toRoll;
 	}
 	
+	public int getScorecard(int row) {
+		return scorecard[row];
+	}
+	
 	public int getUpperSection() {
 		int total = 0;
 		for(int i = 0; i < 6; i++) {
@@ -93,7 +97,7 @@ public class Yahtzee {
 		return Arrays.toString(dice);
 	}
 	
-	
+	/*
 	public void enableTestPrint() {
 		testPrint = true;
 	}
@@ -126,8 +130,9 @@ public class Yahtzee {
 			endGame();
 		}
 	}
+	*/
 	
-	private void roll() {
+	public void roll() {
 		Random rand = new Random();
 		
 		for(int i = 0; i < 5; i++) {
@@ -135,8 +140,15 @@ public class Yahtzee {
 				dice[i] = rand.nextInt(6) + 1;
 			}
 		}
+		
+		round++;
+		
+		if(round == 13) {
+			endGame();
+		}
 	}
 	
+	/*
 	public void disable() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("What dice to not roll again? ");
@@ -158,8 +170,9 @@ public class Yahtzee {
 		//scan.close();
 		//scan2.close();
 	}
+	*/
 	
-	private void switchToRoll(int num) {
+	private void disable(int num) {
 		if(toRoll[num] == true) {
 			toRoll[num] = false;
 		}
@@ -175,10 +188,12 @@ public class Yahtzee {
 		System.exit(0);
 	}
 	
-	private void score() {
+	public void score(int spot) {
+		/*
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Where to score this roll? (1-13) ");
 		int spot = scan.nextInt();
+		*/
 		
 		switch(spot) {
 		//Upper Section
@@ -232,9 +247,15 @@ public class Yahtzee {
 				System.out.println("ERROR");
 		}
 		
-		scan.close();
+		//scan.close();
 		
-		System.out.println("Line score: " + scorecard[spot-1] + "\n");
+		//System.out.println("Line score: " + scorecard[spot-1] + "\n");
+		
+		dice = new int[5];
+		toRoll = new boolean[5];
+		for(int i = 0; i < 5; i++) {
+			toRoll[i] = true;
+		}
 	}
 
 
