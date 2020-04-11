@@ -80,7 +80,7 @@ public class Tetris extends JPanel{
 	private long hiddenScore;
 	private Color[][] well;
 	
-	private void init() {
+	public void init() {
 		well = new Color[12][24];
 		for(int i = 0; i < 12; i++) {
 			for( int j = 0; j < 23; j++) {
