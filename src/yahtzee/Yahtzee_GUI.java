@@ -356,6 +356,8 @@ public class Yahtzee_GUI {
 				roundNum = 1;
 				rollsRemaining = 2;
 				
+				round.setText("Round: " + roundNum);
+				
 				game.roll();
 				
 				updateDice();
