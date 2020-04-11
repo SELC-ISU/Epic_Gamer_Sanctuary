@@ -7,48 +7,268 @@ import javax.swing.*;
 
 public class Yahtzee_GUI {
 
+	int rollsRemaining;
+	int roundNum;
+	
 	JFrame frame;
-	JButton dice1, dice2, dice3, dice4, dice5, rollAgain;
+	
+	JButton start;
+	
+	JButton disableDice1, disableDice2, disableDice3, disableDice4, disableDice5, rollAgain;
+	
 	JButton score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, score13;
-	JLabel label, scorecard;
-	JPanel panel1, panel2;
+	
+	JLabel dice1, dice2, dice3, dice4, dice5;
+	JLabel directions, rollsLeft, round;
+	
+	JLabel scorecard, scorecard1, scorecard2, scorecard3, scorecard4, scorecard5, scorecard6, scorecardUpper;
+	JLabel scorecard7, scorecard8, scorecard9, scorecard10, scorecard11, scorecard12, scorecard13, scorecardLower, scorecardGrand;
+	JLabel scoreUpperTotal, scoreLowerTotal, scoreGrandTotal;
+	
+	JLabel gameOver, restart;
+	
+	JPanel panelGamePlay, panelDiceRow1, panelDiceRow2, panelDice1, panelDice2, panelDice3, panelDice4, panelDice5, panelDiceDirections; 
+	
+	JPanel panelScorecard, panelScoreRow1, panelScoreRow2, panelScoreRow3, panelScoreRow4, panelScoreRow5, panelScoreRow6, panelScoreUpperTotal;
+	JPanel panelScoreRow7, panelScoreRow8, panelScoreRow9, panelScoreRow10, panelScoreRow11, panelScoreRow12, panelScoreRow13, panelScoreLowerTotal, panelScoreGrandTotal;
+	
+	JPanel panelEndGame;
+	
 	Yahtzee game;
 	
 	public Yahtzee_GUI() {
 		
 		game = new Yahtzee();
 		
-		
 		frame = new JFrame("Yahtzee");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(300,300);
+		frame.setSize(500,650);
 		
-		label = new JLabel("Player it is your turn");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		start = new JButton("START");
 		
-		dice1 = new JButton("disable");
-		dice2 = new JButton("disable");
-		dice3 = new JButton("disable");
-		dice4 = new JButton("disable");
-		dice5 = new JButton("disable");
+		// 
+		initGamePlayJLabels();
+		initGamePlayJButtons();
+		
+		initGamePlayPanels();
+		fillGamePlayPanels();
+		
+		
+		// setup scorecard
+		initScorecardJLabel();
+		initScorecardJButton();
+
+		initScorecardPanels();
+		fillScorecardPanels();
+		
+		// 
+		setButtonNames();
+		initAllButtonActionListeners();
+		
+		disableAllButtons();
+		
+		frame.add(panelGamePlay);
+		frame.add(panelScorecard, BorderLayout.LINE_END);
+		frame.add(start, BorderLayout.PAGE_START);
+		
+		frame.setVisible(true);
+
+	}
+
+	private void disableAllButtons() {
+		disableDice1.setEnabled(false);
+		disableDice2.setEnabled(false);
+		disableDice3.setEnabled(false);
+		disableDice4.setEnabled(false);
+		disableDice5.setEnabled(false);
+		
+		rollAgain.setEnabled(false);
+		
+		disableScoreButtons();
+	}
+
+	private void fillGamePlayPanels() {
+		panelDice1.add(dice1);
+		panelDice1.add(disableDice1);
+		panelDice2.add(dice2);
+		panelDice2.add(disableDice2);
+		panelDice3.add(dice3);
+		panelDice3.add(disableDice3);
+		panelDice4.add(dice4);
+		panelDice4.add(disableDice4);
+		panelDice5.add(dice5);
+		panelDice5.add(disableDice5);
+		
+		panelDiceRow1.add(panelDice1);
+		panelDiceRow1.add(panelDice2);
+		panelDiceRow1.add(panelDice3);
+		panelDiceRow2.add(panelDice4);
+		panelDiceRow2.add(panelDice5);
+		
+		panelDiceDirections.add(rollAgain);
+		panelDiceDirections.add(rollsLeft);
+		
+		panelGamePlay.add(round);
+		panelGamePlay.add(panelDiceRow1);
+		panelGamePlay.add(panelDiceRow2);
+		//panelGamePlay.add(directions);
+		panelGamePlay.add(panelDiceDirections);
+	}
+
+	private void initGamePlayPanels() {
+		panelGamePlay = new JPanel();
+		panelGamePlay.setLayout(new BoxLayout(panelGamePlay, BoxLayout.Y_AXIS));
+		
+		panelDiceRow1 = new JPanel();
+		panelDiceRow2 = new JPanel();
+		//panelDice.setLayout(new BoxLayout(panelDice, BoxLayout.Y_AXIS));
+		
+		panelDice1 = new JPanel();
+		panelDice1.setLayout(new BoxLayout(panelDice1, BoxLayout.Y_AXIS));
+		panelDice2 = new JPanel();
+		panelDice2.setLayout(new BoxLayout(panelDice2, BoxLayout.Y_AXIS));
+		panelDice3 = new JPanel();
+		panelDice3.setLayout(new BoxLayout(panelDice3, BoxLayout.Y_AXIS));
+		panelDice4 = new JPanel();
+		panelDice4.setLayout(new BoxLayout(panelDice4, BoxLayout.Y_AXIS));
+		panelDice5 = new JPanel();
+		panelDice5.setLayout(new BoxLayout(panelDice5, BoxLayout.Y_AXIS));
+		
+		panelDiceDirections = new JPanel();
+	}
+
+	private void initGamePlayJButtons() {
+		disableDice1 = new JButton("disable");
+		disableDice2 = new JButton("disable");
+		disableDice3 = new JButton("disable");
+		disableDice4 = new JButton("disable");
+		disableDice5 = new JButton("disable");
 		
 		rollAgain = new JButton("Roll Again");
-		
-		score1 = new JButton("score");
-		score2 = new JButton("score");
-		score3 = new JButton("score");
-		score4 = new JButton("score");
-		score5 = new JButton("score");
-		score6 = new JButton("score");
-		score7 = new JButton("score");
-		score8 = new JButton("score");
-		score9 = new JButton("score");
-		score10 = new JButton("score");
-		score11 = new JButton("score");
-		score12 = new JButton("score");
-		score13 = new JButton("score");
+	}
 
+	private void initGamePlayJLabels() {
+		dice1 = new JLabel(game.getDiceNum(0) + "");
+		dice2 = new JLabel(game.getDiceNum(1) + "");
+		dice3 = new JLabel(game.getDiceNum(2) + "");
+		dice4 = new JLabel(game.getDiceNum(3) + "");
+		dice5 = new JLabel(game.getDiceNum(4) + "");
 		
+		dice1.setFont(new Font("Tahoma", Font.BOLD, 100));
+		dice2.setFont(new Font("Tahoma", Font.BOLD, 100));
+		dice3.setFont(new Font("Tahoma", Font.BOLD, 100));
+		dice4.setFont(new Font("Tahoma", Font.BOLD, 100));
+		dice5.setFont(new Font("Tahoma", Font.BOLD, 100));
+		
+		round = new JLabel("Round: " + roundNum);
+		round.setFont(new Font("Tahoma", Font.BOLD, 30));
+		
+		directions = new JLabel("Click the buttons on the dice to disable/enable a roll\nThen click the re-roll button");
+		rollsLeft = new JLabel("Rolls Left: " + rollsRemaining);
+	}
+
+	private void fillScorecardPanels() {
+		panelScoreRow1.add(scorecard1);
+		panelScoreRow1.add(score1);
+		panelScoreRow2.add(scorecard2);
+		panelScoreRow2.add(score2);
+		panelScoreRow3.add(scorecard3);
+		panelScoreRow3.add(score3);
+		panelScoreRow4.add(scorecard4);
+		panelScoreRow4.add(score4);
+		panelScoreRow5.add(scorecard5);
+		panelScoreRow5.add(score5);
+		panelScoreRow6.add(scorecard6);
+		panelScoreRow6.add(score6);
+		panelScoreUpperTotal.add(scorecardUpper);
+		panelScoreUpperTotal.add(scoreUpperTotal);
+		panelScoreRow7.add(scorecard7);
+		panelScoreRow7.add(score7);
+		panelScoreRow8.add(scorecard8);
+		panelScoreRow8.add(score8);
+		panelScoreRow9.add(scorecard9);
+		panelScoreRow9.add(score9);
+		panelScoreRow10.add(scorecard10);
+		panelScoreRow10.add(score10);
+		panelScoreRow11.add(scorecard11);
+		panelScoreRow11.add(score11);
+		panelScoreRow12.add(scorecard12);
+		panelScoreRow12.add(score12);
+		panelScoreRow13.add(scorecard13);
+		panelScoreRow13.add(score13);
+		panelScoreLowerTotal.add(scorecardLower);
+		panelScoreLowerTotal.add(scoreLowerTotal);
+		panelScoreGrandTotal.add(scorecardGrand);
+		panelScoreGrandTotal.add(scoreGrandTotal);
+		
+		panelScorecard.add(scorecard);
+		panelScorecard.add(panelScoreRow1);
+		panelScorecard.add(panelScoreRow2);
+		panelScorecard.add(panelScoreRow3);
+		panelScorecard.add(panelScoreRow4);
+		panelScorecard.add(panelScoreRow5);
+		panelScorecard.add(panelScoreRow6);
+		panelScorecard.add(panelScoreUpperTotal);
+		panelScorecard.add(panelScoreRow7);
+		panelScorecard.add(panelScoreRow8);
+		panelScorecard.add(panelScoreRow9);
+		panelScorecard.add(panelScoreRow10);
+		panelScorecard.add(panelScoreRow11);
+		panelScorecard.add(panelScoreRow12);
+		panelScorecard.add(panelScoreRow13);
+		panelScorecard.add(panelScoreLowerTotal);
+		panelScorecard.add(panelScoreGrandTotal);
+	}
+
+	private void initScorecardPanels() {
+		panelScorecard = new JPanel();
+		panelScorecard.setLayout(new BoxLayout(panelScorecard, BoxLayout.Y_AXIS));
+		
+		panelScoreRow1 = new JPanel();
+		panelScoreRow2 = new JPanel();
+		panelScoreRow3 = new JPanel();
+		panelScoreRow4 = new JPanel();
+		panelScoreRow5 = new JPanel();
+		panelScoreRow6 = new JPanel();
+		panelScoreUpperTotal = new JPanel();
+		panelScoreRow7 = new JPanel();
+		panelScoreRow8 = new JPanel();
+		panelScoreRow9 = new JPanel();
+		panelScoreRow10 = new JPanel();
+		panelScoreRow11 = new JPanel();
+		panelScoreRow12 = new JPanel();
+		panelScoreRow13 = new JPanel();
+		panelScoreLowerTotal = new JPanel();
+		panelScoreGrandTotal = new JPanel();
+	}
+
+	private void initAllButtonActionListeners() {
+		start.addActionListener(new ButtonActionListener());
+		
+		disableDice1.addActionListener(new ButtonActionListener());
+		disableDice2.addActionListener(new ButtonActionListener());
+		disableDice3.addActionListener(new ButtonActionListener());
+		disableDice4.addActionListener(new ButtonActionListener());
+		disableDice5.addActionListener(new ButtonActionListener());
+		
+		rollAgain.addActionListener(new ButtonActionListener());
+		
+		score1.addActionListener(new ButtonActionListener());
+		score2.addActionListener(new ButtonActionListener());
+		score3.addActionListener(new ButtonActionListener());
+		score4.addActionListener(new ButtonActionListener());
+		score5.addActionListener(new ButtonActionListener());
+		score6.addActionListener(new ButtonActionListener());
+		score7.addActionListener(new ButtonActionListener());
+		score8.addActionListener(new ButtonActionListener());
+		score9.addActionListener(new ButtonActionListener());
+		score10.addActionListener(new ButtonActionListener());
+		score11.addActionListener(new ButtonActionListener());
+		score12.addActionListener(new ButtonActionListener());
+		score13.addActionListener(new ButtonActionListener());
+	}
+
+	private void setButtonNames() {
 		score1.setName("1");
 		score2.setName("2");
 		score3.setName("3");
@@ -65,55 +285,238 @@ public class Yahtzee_GUI {
 		
 		rollAgain.setName("20");
 		
-		dice1.setName("31");
-		dice2.setName("32");
-		dice3.setName("33");
-		dice4.setName("34");
-		dice5.setName("35");
+		disableDice1.setName("31");
+		disableDice2.setName("32");
+		disableDice3.setName("33");
+		disableDice4.setName("34");
+		disableDice5.setName("35");
 		
-		
-		dice1.addActionListener(new ButtonActionListener());
-		dice2.addActionListener(new ButtonActionListener());
-		dice3.addActionListener(new ButtonActionListener());
-		dice4.addActionListener(new ButtonActionListener());
-		dice5.addActionListener(new ButtonActionListener());
-		rollAgain.addActionListener(new ButtonActionListener());
-		score1.addActionListener(new ButtonActionListener());
-		score2.addActionListener(new ButtonActionListener());
-		score3.addActionListener(new ButtonActionListener());
-		score4.addActionListener(new ButtonActionListener());
-		score5.addActionListener(new ButtonActionListener());
-		score6.addActionListener(new ButtonActionListener());
-		score7.addActionListener(new ButtonActionListener());
-		score8.addActionListener(new ButtonActionListener());
-		score9.addActionListener(new ButtonActionListener());
-		score10.addActionListener(new ButtonActionListener());
-		score11.addActionListener(new ButtonActionListener());
-		score12.addActionListener(new ButtonActionListener());
-		score13.addActionListener(new ButtonActionListener());
+		start.setName("40");
+	}
 
-		panel1 = new JPanel();
-		panel2 = new JPanel();
-		panel2.setLayout(new GridLayout(3, 3));
-		
-		panel2.add(dice1);
+	private void initScorecardJButton() {
+		score1 = new JButton("score");
+		score2 = new JButton("score");
+		score3 = new JButton("score");
+		score4 = new JButton("score");
+		score5 = new JButton("score");
+		score6 = new JButton("score");
+		score7 = new JButton("score");
+		score8 = new JButton("score");
+		score9 = new JButton("score");
+		score10 = new JButton("score");
+		score11 = new JButton("score");
+		score12 = new JButton("score");
+		score13 = new JButton("score");
+	}
 
+	private void initScorecardJLabel() {
+		// push button, button holds value, disables, font bold
+		scorecard = new JLabel("Scorecard");
+		scorecard.setFont(new Font("Tahoma", Font.BOLD, 20));
+		scorecard1 = new JLabel("  One's   ");
+		scorecard2 = new JLabel("  Two's   ");
+		scorecard3 = new JLabel("  Three's ");
+		scorecard4 = new JLabel("  Four's  ");
+		scorecard5 = new JLabel("  Five's  ");
+		scorecard6 = new JLabel("  Six's   ");
+		scorecardUpper = new JLabel("Upper Total ");
+		scorecardUpper.setFont(new Font("Tahoma", Font.BOLD, 13));
+		scorecard7 = new JLabel("  3 of a Kind ");
+		scorecard8 = new JLabel("  4 of a Kind ");
+		scorecard9 = new JLabel("  Full House  ");
+		scorecard10 = new JLabel("  Sm Straight ");
+		scorecard11 = new JLabel("  Lg Straight ");
+		scorecard12 = new JLabel("  Yahtzee     ");
+		scorecard13 = new JLabel("  Chance      ");
+		scorecardLower = new JLabel("Lower Total ");
+		scorecardLower.setFont(new Font("Tahoma", Font.BOLD, 13));
+		scorecardGrand = new JLabel("Grand Total ");
+		scorecardGrand.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
-		panel1.add(label);
-		
-		frame.add(panel1, BorderLayout.PAGE_START);
-		frame.add(panel2, BorderLayout.CENTER);
-		
-		frame.setVisible(true);
-		
-		
-		
+		scoreUpperTotal = new JLabel(game.getUpperSection() + "");
+		scoreLowerTotal = new JLabel(game.getLowerSection() + "");
+		scoreGrandTotal = new JLabel(game.getGrandTotal() + "");
 	}
 
 
 	public class ButtonActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			int id = Integer.parseInt(((AbstractButton) e.getSource()).getName());
 			
+			// start
+			if(id == 40) {
+				if(roundNum > 13) {
+					frame.remove(panelEndGame);
+					frame.add(panelGamePlay);
+					game = new Yahtzee();
+					resetLabelText();
+				}
+				
+				roundNum = 1;
+				rollsRemaining = 2;
+				
+				game.roll();
+				
+				updateDice();
+				
+				enableAllButtons();
+				
+				frame.remove(start);
+			}
+			// roll again
+			else if(id == 20) {
+				game.roll();
+				rollsRemaining--;
+				
+				updateDice();
+				rollsLeft.setText("Rolls Left: " + rollsRemaining);
+				
+				if(rollsRemaining == 0) {
+					rollAgain.setEnabled(false);
+				}
+				
+				enableScoreButtons();
+			}
+			// disiables
+			else if(31 <= id && id <=35) {
+				id -= 31;
+				game.disable(id);
+
+				String text = ((AbstractButton) e.getSource()).getText();
+				if(text.contains("disable")) {
+					((AbstractButton) e.getSource()).setText("enable");
+				}
+				else {
+					((AbstractButton) e.getSource()).setText("disable");
+				}
+			}
+			// scores
+			else if(1 <= id && id <= 13) {
+				game.score(id);
+				
+				if(id < 7) {
+					scoreUpperTotal.setText(game.getUpperSection() + "");
+				}
+				else {
+					scoreLowerTotal.setText(game.getLowerSection() + "");
+				}
+				scoreGrandTotal.setText(game.getGrandTotal() + "");
+				
+				disableScoreButtons();
+				
+				((AbstractButton) e.getSource()).setText(game.getScorecard(id-1) + "");
+				
+				resetDisableButtons();
+				
+				rollAgain.setEnabled(true);
+				rollsRemaining = 3;
+				rollsLeft.setText("Press button to roll again");
+				
+				roundNum++;
+				if(roundNum > 13) {
+					endGame();
+				}
+				round.setText("Round: " + roundNum);
+				
+			}
 		}
+	}
+	
+	public void updateDice() {
+		dice1.setText(game.getDiceNum(0) + "");
+		dice2.setText(game.getDiceNum(1) + "");
+		dice3.setText(game.getDiceNum(2) + "");
+		dice4.setText(game.getDiceNum(3) + "");
+		dice5.setText(game.getDiceNum(4) + "");
+	}
+	
+	public void resetLabelText() {
+		round.setText("Round: " + roundNum);
+		
+		score1.setText("score");
+		score2.setText("score");
+		score3.setText("score");
+		score4.setText("score");
+		score5.setText("score");
+		score6.setText("score");
+		score7.setText("score");
+		score8.setText("score");
+		score9.setText("score");
+		score10.setText("score");
+		score11.setText("score");
+		score12.setText("score");
+		score13.setText("score");
+	}
+
+	public void endGame() {
+		disableAllButtons();
+		
+		gameOver = new JLabel("GAME OVER!");
+		restart = new JLabel("Press Start Button to Begin a New Game");
+		
+		panelEndGame = new JPanel();
+		panelEndGame.setLayout(new BoxLayout(panelEndGame, BoxLayout.Y_AXIS));
+		
+		panelEndGame.add(gameOver);
+		panelEndGame.add(restart);
+		
+		frame.remove(panelGamePlay);
+		frame.add(panelEndGame);
+		frame.add(start, BorderLayout.PAGE_START);
+	}
+
+	public void resetDisableButtons() {
+		disableDice1.setText("disable");
+		disableDice2.setText("disable");
+		disableDice3.setText("disable");
+		disableDice4.setText("disable");
+		disableDice5.setText("disable");
+	}
+
+	
+	/***
+	 * Possible way to implement other functions better (use array or arrayList maybe), less code
+	 */
+	public void enableScoreButtons() {
+		JButton[] scoreButtons = {score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, score13};
+		
+		for(int i = 0; i < scoreButtons.length; i++) {
+			if(scoreButtons[i].getText().contentEquals("score")) {
+				scoreButtons[i].setEnabled(true);
+			}
+		}
+	}
+
+	public void disableScoreButtons() {
+		score1.setEnabled(false);
+		score2.setEnabled(false);
+		score3.setEnabled(false);
+		score4.setEnabled(false);
+		score5.setEnabled(false);
+		score6.setEnabled(false);
+		score7.setEnabled(false);
+		score8.setEnabled(false);
+		score9.setEnabled(false);
+		score10.setEnabled(false);
+		score11.setEnabled(false);
+		score12.setEnabled(false);
+		score13.setEnabled(false);
+	}
+
+	public void enableAllButtons() {
+		disableDice1.setEnabled(true);
+		disableDice2.setEnabled(true);
+		disableDice3.setEnabled(true);
+		disableDice4.setEnabled(true);
+		disableDice5.setEnabled(true);
+		
+		rollAgain.setEnabled(true);
+		
+		enableScoreButtons();
+	}
+
+	public static void main(String[] args) {
+		Yahtzee_GUI test = new Yahtzee_GUI();
 	}
 }

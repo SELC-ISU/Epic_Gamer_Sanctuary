@@ -28,6 +28,10 @@ public class Yahtzee {
 	}
 	
 	
+	public int getDiceNum(int diceNum) {
+		return dice[diceNum];
+	}
+	
 	public int getDiceTotal() {
 		int total = 0;
 		for(int i = 0;i < 5; i++) {
@@ -141,11 +145,7 @@ public class Yahtzee {
 			}
 		}
 		
-		round++;
-		
-		if(round == 13) {
-			endGame();
-		}
+
 	}
 	
 	/*
@@ -172,7 +172,7 @@ public class Yahtzee {
 	}
 	*/
 	
-	private void disable(int num) {
+	public void disable(int num) {
 		if(toRoll[num] == true) {
 			toRoll[num] = false;
 		}
