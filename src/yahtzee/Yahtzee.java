@@ -286,8 +286,10 @@ public class Yahtzee {
 	private boolean isSmallStraight() {
 		sortDice();
 		
-		for(int i = 0; i < 5; i++) {
-			if(!(dice[i] == i || dice[i] == i+1 || dice[i] == i-1)) {
+		singleSortDice();
+		
+		for(int i = 0; i < 3; i++) {
+			if(dice[i]+1 != dice[i+1]) {
 				return false;
 			}
 		}
@@ -295,6 +297,20 @@ public class Yahtzee {
 		return true;
 	}
 	
+	// input is ordered dice, if there is a repeating number move it to the end of the array
+	private void singleSortDice() {
+		for(int i = 0; i < dice.length-1; i++) {
+			if(dice[i] == dice[i+1]) {
+				int temp = dice[i];
+				for(int j = i; j < dice.length-1; j++) {
+					dice[j] = dice[j+1];
+				}
+				dice[dice.length-1] = temp;
+			}
+		}
+	}
+
+
 	private void sortDice() {
 		for(int i = 0; i < 5; i++) {
 			for(int j = 1; j < 5; j++) {

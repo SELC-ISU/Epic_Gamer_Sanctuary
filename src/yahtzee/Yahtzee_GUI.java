@@ -13,30 +13,58 @@ public class Yahtzee_GUI {
 	JFrame frame;
 	
 	JButton start;
-	
+	/*
 	JButton disableDice1, disableDice2, disableDice3, disableDice4, disableDice5, rollAgain;
-	
 	JButton score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, score13;
+	*/
+	JButton rollAgain;
+	JButton[] disableButtons;
+	JButton[] scoreButtons;
+
 	
-	JLabel dice1, dice2, dice3, dice4, dice5;
+	//JLabel dice1, dice2, dice3, dice4, dice5;
+	
 	JLabel directions, rollsLeft, round;
+	JLabel[] diceLabels;
 	
+	/*
 	JLabel scorecard, scorecard1, scorecard2, scorecard3, scorecard4, scorecard5, scorecard6, scorecardUpper;
 	JLabel scorecard7, scorecard8, scorecard9, scorecard10, scorecard11, scorecard12, scorecard13, scorecardLower, scorecardGrand;
 	JLabel scoreUpperTotal, scoreLowerTotal, scoreGrandTotal;
+	*/
+	
+	JLabel scorecardTitle, scoreUpperValue, scoreLowerValue, scoreGrandValue;
+	JLabel[] scorecardLabels;
 	
 	JLabel gameOver, restart;
 	
-	JPanel panelGamePlay, panelDiceRow1, panelDiceRow2, panelDice1, panelDice2, panelDice3, panelDice4, panelDice5, panelDiceDirections; 
+	//JPanel panelGamePlay, panelDiceRow1, panelDiceRow2, panelDice1, panelDice2, panelDice3, panelDice4, panelDice5, panelDiceDirections; 
 	
+	// maybe change panelDiceRows into array?
+	JPanel panelGamePlay, panelDiceRow1, panelDiceRow2, panelDiceDirections;
+	JPanel[] dicePanels;
+	
+	/*
 	JPanel panelScorecard, panelScoreRow1, panelScoreRow2, panelScoreRow3, panelScoreRow4, panelScoreRow5, panelScoreRow6, panelScoreUpperTotal;
 	JPanel panelScoreRow7, panelScoreRow8, panelScoreRow9, panelScoreRow10, panelScoreRow11, panelScoreRow12, panelScoreRow13, panelScoreLowerTotal, panelScoreGrandTotal;
+	*/
+	JPanel panelScorecard;
+	JPanel[] scorecardRowPanels;
 	
 	JPanel panelEndGame;
 	
 	Yahtzee game;
 	
 	public Yahtzee_GUI() {
+		
+		disableButtons = new JButton[5];
+		scoreButtons = new JButton[13];
+		
+		diceLabels = new JLabel[5];
+		scorecardLabels = new JLabel[16];
+		
+		dicePanels = new JPanel[5];
+		scorecardRowPanels = new JPanel[16];
 		
 		game = new Yahtzee();
 		
@@ -76,18 +104,27 @@ public class Yahtzee_GUI {
 	}
 
 	private void disableAllButtons() {
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].setEnabled(false);
+		}
+		/*
 		disableDice1.setEnabled(false);
 		disableDice2.setEnabled(false);
 		disableDice3.setEnabled(false);
 		disableDice4.setEnabled(false);
 		disableDice5.setEnabled(false);
-		
+		*/
 		rollAgain.setEnabled(false);
 		
 		disableScoreButtons();
 	}
 
 	private void fillGamePlayPanels() {
+		for(int i = 0; i < dicePanels.length; i++) {
+			dicePanels[i].add(diceLabels[i]);
+			dicePanels[i].add(disableButtons[i]);
+		}
+		/*
 		panelDice1.add(dice1);
 		panelDice1.add(disableDice1);
 		panelDice2.add(dice2);
@@ -98,12 +135,13 @@ public class Yahtzee_GUI {
 		panelDice4.add(disableDice4);
 		panelDice5.add(dice5);
 		panelDice5.add(disableDice5);
+		*/
 		
-		panelDiceRow1.add(panelDice1);
-		panelDiceRow1.add(panelDice2);
-		panelDiceRow1.add(panelDice3);
-		panelDiceRow2.add(panelDice4);
-		panelDiceRow2.add(panelDice5);
+		panelDiceRow1.add(dicePanels[0]);
+		panelDiceRow1.add(dicePanels[1]);
+		panelDiceRow1.add(dicePanels[2]);
+		panelDiceRow2.add(dicePanels[3]);
+		panelDiceRow2.add(dicePanels[4]);
 		
 		panelDiceDirections.add(rollAgain);
 		panelDiceDirections.add(rollsLeft);
@@ -123,6 +161,11 @@ public class Yahtzee_GUI {
 		panelDiceRow2 = new JPanel();
 		//panelDice.setLayout(new BoxLayout(panelDice, BoxLayout.Y_AXIS));
 		
+		for(int i = 0; i < dicePanels.length; i++) {
+			dicePanels[i] = new JPanel();
+			dicePanels[i].setLayout(new BoxLayout(dicePanels[i], BoxLayout.Y_AXIS));
+		}
+		/*
 		panelDice1 = new JPanel();
 		panelDice1.setLayout(new BoxLayout(panelDice1, BoxLayout.Y_AXIS));
 		panelDice2 = new JPanel();
@@ -133,21 +176,30 @@ public class Yahtzee_GUI {
 		panelDice4.setLayout(new BoxLayout(panelDice4, BoxLayout.Y_AXIS));
 		panelDice5 = new JPanel();
 		panelDice5.setLayout(new BoxLayout(panelDice5, BoxLayout.Y_AXIS));
-		
+		*/
 		panelDiceDirections = new JPanel();
 	}
 
 	private void initGamePlayJButtons() {
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i] = new JButton("Rolling");
+		}
+		/*
 		disableDice1 = new JButton("disable");
 		disableDice2 = new JButton("disable");
 		disableDice3 = new JButton("disable");
 		disableDice4 = new JButton("disable");
 		disableDice5 = new JButton("disable");
-		
+		*/
 		rollAgain = new JButton("Roll Again");
 	}
 
 	private void initGamePlayJLabels() {
+		for(int i = 0; i < diceLabels.length; i++) {
+			diceLabels[i] = new JLabel(game.getDiceNum(i) + "");
+			diceLabels[i].setFont(new Font("Tahoma", Font.BOLD, 100));
+		}
+		/*
 		dice1 = new JLabel(game.getDiceNum(0) + "");
 		dice2 = new JLabel(game.getDiceNum(1) + "");
 		dice3 = new JLabel(game.getDiceNum(2) + "");
@@ -159,7 +211,7 @@ public class Yahtzee_GUI {
 		dice3.setFont(new Font("Tahoma", Font.BOLD, 100));
 		dice4.setFont(new Font("Tahoma", Font.BOLD, 100));
 		dice5.setFont(new Font("Tahoma", Font.BOLD, 100));
-		
+		*/
 		round = new JLabel("Round: " + roundNum);
 		round.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
@@ -168,6 +220,11 @@ public class Yahtzee_GUI {
 	}
 
 	private void fillScorecardPanels() {
+		for(int i = 0; i < 6; i++) {
+			scorecardRowPanels[i].add(scorecardLabels[i]);
+			scorecardRowPanels[i].add(scoreButtons[i]);
+		}
+		/*
 		panelScoreRow1.add(scorecard1);
 		panelScoreRow1.add(score1);
 		panelScoreRow2.add(scorecard2);
@@ -180,8 +237,21 @@ public class Yahtzee_GUI {
 		panelScoreRow5.add(score5);
 		panelScoreRow6.add(scorecard6);
 		panelScoreRow6.add(score6);
+		*/
+		scorecardRowPanels[6].add(scorecardLabels[6]);
+		scorecardRowPanels[6].add(scoreUpperValue);
+		/*
 		panelScoreUpperTotal.add(scorecardUpper);
 		panelScoreUpperTotal.add(scoreUpperTotal);
+		*/
+		/****
+		 * Not sure about alignment
+		 */
+		for(int i = 7; i <= 13; i++) {
+			scorecardRowPanels[i].add(scorecardLabels[i]);
+			scorecardRowPanels[i].add(scoreButtons[i-1]);
+		}
+		/*
 		panelScoreRow7.add(scorecard7);
 		panelScoreRow7.add(score7);
 		panelScoreRow8.add(scorecard8);
@@ -196,11 +266,22 @@ public class Yahtzee_GUI {
 		panelScoreRow12.add(score12);
 		panelScoreRow13.add(scorecard13);
 		panelScoreRow13.add(score13);
+		*/
+		scorecardRowPanels[14].add(scorecardLabels[14]);
+		scorecardRowPanels[14].add(scoreLowerValue);
+		scorecardRowPanels[15].add(scorecardLabels[15]);
+		scorecardRowPanels[15].add(scoreGrandValue);
+		/*
 		panelScoreLowerTotal.add(scorecardLower);
 		panelScoreLowerTotal.add(scoreLowerTotal);
 		panelScoreGrandTotal.add(scorecardGrand);
 		panelScoreGrandTotal.add(scoreGrandTotal);
-		
+		*/
+		panelScorecard.add(scorecardTitle);
+		for(int i = 0; i < scorecardRowPanels.length; i++) {
+			panelScorecard.add(scorecardRowPanels[i]);
+		}
+ 		/*
 		panelScorecard.add(scorecard);
 		panelScorecard.add(panelScoreRow1);
 		panelScorecard.add(panelScoreRow2);
@@ -218,12 +299,17 @@ public class Yahtzee_GUI {
 		panelScorecard.add(panelScoreRow13);
 		panelScorecard.add(panelScoreLowerTotal);
 		panelScorecard.add(panelScoreGrandTotal);
+		*/
 	}
 
 	private void initScorecardPanels() {
 		panelScorecard = new JPanel();
 		panelScorecard.setLayout(new BoxLayout(panelScorecard, BoxLayout.Y_AXIS));
 		
+		for(int i = 0; i < scorecardRowPanels.length; i++) {
+			scorecardRowPanels[i] = new JPanel();
+		}
+		/*
 		panelScoreRow1 = new JPanel();
 		panelScoreRow2 = new JPanel();
 		panelScoreRow3 = new JPanel();
@@ -240,19 +326,28 @@ public class Yahtzee_GUI {
 		panelScoreRow13 = new JPanel();
 		panelScoreLowerTotal = new JPanel();
 		panelScoreGrandTotal = new JPanel();
+		*/
 	}
 
 	private void initAllButtonActionListeners() {
 		start.addActionListener(new ButtonActionListener());
 		
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].addActionListener(new ButtonActionListener());
+		}
+		/*
 		disableDice1.addActionListener(new ButtonActionListener());
 		disableDice2.addActionListener(new ButtonActionListener());
 		disableDice3.addActionListener(new ButtonActionListener());
 		disableDice4.addActionListener(new ButtonActionListener());
 		disableDice5.addActionListener(new ButtonActionListener());
-		
+		*/
 		rollAgain.addActionListener(new ButtonActionListener());
 		
+		for(int i=0; i<scoreButtons.length; i++) {
+			scoreButtons[i].addActionListener(new ButtonActionListener());
+		}
+		/*
 		score1.addActionListener(new ButtonActionListener());
 		score2.addActionListener(new ButtonActionListener());
 		score3.addActionListener(new ButtonActionListener());
@@ -266,9 +361,14 @@ public class Yahtzee_GUI {
 		score11.addActionListener(new ButtonActionListener());
 		score12.addActionListener(new ButtonActionListener());
 		score13.addActionListener(new ButtonActionListener());
+		*/
 	}
 
 	private void setButtonNames() {
+		for(int i = 0; i < scoreButtons.length; i++) {
+			scoreButtons[i].setName(i+1 + "");
+		}
+		/*
 		score1.setName("1");
 		score2.setName("2");
 		score3.setName("3");
@@ -282,19 +382,27 @@ public class Yahtzee_GUI {
 		score11.setName("11");
 		score12.setName("12");
 		score13.setName("13");
-		
+		*/
 		rollAgain.setName("20");
 		
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].setName(i+31 + "");
+		}
+		/*
 		disableDice1.setName("31");
 		disableDice2.setName("32");
 		disableDice3.setName("33");
 		disableDice4.setName("34");
 		disableDice5.setName("35");
-		
+		*/
 		start.setName("40");
 	}
 
 	private void initScorecardJButton() {
+		for(int i = 0; i < scoreButtons.length; i++) {
+			scoreButtons[i] = new JButton("score");
+		}
+		/*
 		score1 = new JButton("score");
 		score2 = new JButton("score");
 		score3 = new JButton("score");
@@ -308,9 +416,32 @@ public class Yahtzee_GUI {
 		score11 = new JButton("score");
 		score12 = new JButton("score");
 		score13 = new JButton("score");
+		*/
 	}
 
 	private void initScorecardJLabel() {
+		scorecardTitle = new JLabel("Scorecard");
+		scorecardTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+		scorecardLabels[0] = new JLabel("  One's   ");
+		scorecardLabels[1] = new JLabel("  Two's   ");
+		scorecardLabels[2] = new JLabel("  Three's ");
+		scorecardLabels[3] = new JLabel("  Four's  ");
+		scorecardLabels[4] = new JLabel("  Five's  ");
+		scorecardLabels[5] = new JLabel("  Six's   ");
+		scorecardLabels[6] = new JLabel("Upper Total ");
+		scorecardLabels[6].setFont(new Font("Tahoma", Font.BOLD, 13));
+		scorecardLabels[7] = new JLabel("  3 of a Kind ");
+		scorecardLabels[8] = new JLabel("  4 of a Kind ");
+		scorecardLabels[9] = new JLabel("  Full House  ");
+		scorecardLabels[10] = new JLabel("  Sm Straight ");
+		scorecardLabels[11] = new JLabel("  Lg Straight ");
+		scorecardLabels[12] = new JLabel("  Yahtzee     ");
+		scorecardLabels[13] = new JLabel("  Chance      ");
+		scorecardLabels[14] = new JLabel("Lower Total ");
+		scorecardLabels[14].setFont(new Font("Tahoma", Font.BOLD, 13));
+		scorecardLabels[15] = new JLabel("Grand Total ");
+		scorecardLabels[15].setFont(new Font("Tahoma", Font.BOLD, 17));
+		/*
 		// push button, button holds value, disables, font bold
 		scorecard = new JLabel("Scorecard");
 		scorecard.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -333,13 +464,15 @@ public class Yahtzee_GUI {
 		scorecardLower.setFont(new Font("Tahoma", Font.BOLD, 13));
 		scorecardGrand = new JLabel("Grand Total ");
 		scorecardGrand.setFont(new Font("Tahoma", Font.BOLD, 17));
-		
-		scoreUpperTotal = new JLabel(game.getUpperSection() + "");
-		scoreLowerTotal = new JLabel(game.getLowerSection() + "");
-		scoreGrandTotal = new JLabel(game.getGrandTotal() + "");
+		*/
+		scoreUpperValue = new JLabel(game.getUpperSection() + "");
+		scoreLowerValue = new JLabel(game.getLowerSection() + "");
+		scoreGrandValue = new JLabel(game.getGrandTotal() + "");
 	}
 
 
+	
+	
 	public class ButtonActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int id = Integer.parseInt(((AbstractButton) e.getSource()).getName());
@@ -351,12 +484,16 @@ public class Yahtzee_GUI {
 					frame.add(panelGamePlay);
 					game = new Yahtzee();
 					resetLabelText();
+					scoreUpperValue.setText(game.getUpperSection() + "");
+					scoreLowerValue.setText(game.getLowerSection() + "");
+					scoreGrandValue.setText(game.getGrandTotal() + "");
 				}
 				
 				roundNum = 1;
 				rollsRemaining = 2;
 				
 				round.setText("Round: " + roundNum);
+				rollsLeft.setText("Rolls Left: " + rollsRemaining);
 				
 				game.roll();
 				
@@ -369,6 +506,11 @@ public class Yahtzee_GUI {
 			// roll again
 			else if(id == 20) {
 				game.roll();
+				
+				if(rollsRemaining == 3) {
+					enableDisableButtons();
+				}
+				
 				rollsRemaining--;
 				
 				updateDice();
@@ -376,21 +518,23 @@ public class Yahtzee_GUI {
 				
 				if(rollsRemaining == 0) {
 					rollAgain.setEnabled(false);
+					
+					disableDisableButtons();
 				}
 				
 				enableScoreButtons();
 			}
-			// disiables
+			// disables
 			else if(31 <= id && id <=35) {
 				id -= 31;
 				game.disable(id);
 
 				String text = ((AbstractButton) e.getSource()).getText();
-				if(text.contains("disable")) {
-					((AbstractButton) e.getSource()).setText("enable");
+				if(text.contains("Rolling")) {
+					((AbstractButton) e.getSource()).setText("Holding");
 				}
 				else {
-					((AbstractButton) e.getSource()).setText("disable");
+					((AbstractButton) e.getSource()).setText("Rolling");
 				}
 			}
 			// scores
@@ -398,12 +542,12 @@ public class Yahtzee_GUI {
 				game.score(id);
 				
 				if(id < 7) {
-					scoreUpperTotal.setText(game.getUpperSection() + "");
+					scoreUpperValue.setText(game.getUpperSection() + "");
 				}
 				else {
-					scoreLowerTotal.setText(game.getLowerSection() + "");
+					scoreLowerValue.setText(game.getLowerSection() + "");
 				}
-				scoreGrandTotal.setText(game.getGrandTotal() + "");
+				scoreGrandValue.setText(game.getGrandTotal() + "");
 				
 				disableScoreButtons();
 				
@@ -423,19 +567,41 @@ public class Yahtzee_GUI {
 				
 			}
 		}
+
+	}
+	
+	private void enableDisableButtons() {
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].setEnabled(true);
+		}
+	}
+	
+	private void disableDisableButtons() {
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].setEnabled(false);
+		}
 	}
 	
 	public void updateDice() {
+		for(int i = 0; i < diceLabels.length; i++) {
+			diceLabels[i].setText(game.getDiceNum(i) + "");
+		}
+		/*
 		dice1.setText(game.getDiceNum(0) + "");
 		dice2.setText(game.getDiceNum(1) + "");
 		dice3.setText(game.getDiceNum(2) + "");
 		dice4.setText(game.getDiceNum(3) + "");
 		dice5.setText(game.getDiceNum(4) + "");
+		*/
 	}
 	
 	public void resetLabelText() {
 		round.setText("Round: " + roundNum);
 		
+		for(int i = 0; i < scoreButtons.length; i++) {
+			scoreButtons[i].setText("score");
+		}
+		/*
 		score1.setText("score");
 		score2.setText("score");
 		score3.setText("score");
@@ -449,13 +615,16 @@ public class Yahtzee_GUI {
 		score11.setText("score");
 		score12.setText("score");
 		score13.setText("score");
+		*/
 	}
 
 	public void endGame() {
 		disableAllButtons();
 		
 		gameOver = new JLabel("GAME OVER!");
+		gameOver.setFont(new Font("Tahoma", Font.BOLD, 40));
 		restart = new JLabel("Press Start Button to Begin a New Game");
+		restart.setFont(new Font("Tahoma", Font.ITALIC, 15));
 		
 		panelEndGame = new JPanel();
 		panelEndGame.setLayout(new BoxLayout(panelEndGame, BoxLayout.Y_AXIS));
@@ -469,19 +638,20 @@ public class Yahtzee_GUI {
 	}
 
 	public void resetDisableButtons() {
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].setText("Rolling");
+		}
+		/*
 		disableDice1.setText("disable");
 		disableDice2.setText("disable");
 		disableDice3.setText("disable");
 		disableDice4.setText("disable");
 		disableDice5.setText("disable");
+		*/
 	}
-
 	
-	/***
-	 * Possible way to implement other functions better (use array or arrayList maybe), less code
-	 */
 	public void enableScoreButtons() {
-		JButton[] scoreButtons = {score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, score13};
+		//JButton[] scoreButtons = {score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, score13};
 		
 		for(int i = 0; i < scoreButtons.length; i++) {
 			if(scoreButtons[i].getText().contentEquals("score")) {
@@ -491,6 +661,10 @@ public class Yahtzee_GUI {
 	}
 
 	public void disableScoreButtons() {
+		for(int i = 0; i < scoreButtons.length; i++) {
+			scoreButtons[i].setEnabled(false);
+		}
+		/*
 		score1.setEnabled(false);
 		score2.setEnabled(false);
 		score3.setEnabled(false);
@@ -504,15 +678,20 @@ public class Yahtzee_GUI {
 		score11.setEnabled(false);
 		score12.setEnabled(false);
 		score13.setEnabled(false);
+		*/
 	}
 
 	public void enableAllButtons() {
+		for(int i = 0; i < disableButtons.length; i++) {
+			disableButtons[i].setEnabled(true);
+		}
+		/*
 		disableDice1.setEnabled(true);
 		disableDice2.setEnabled(true);
 		disableDice3.setEnabled(true);
 		disableDice4.setEnabled(true);
 		disableDice5.setEnabled(true);
-		
+		*/
 		rollAgain.setEnabled(true);
 		
 		enableScoreButtons();
