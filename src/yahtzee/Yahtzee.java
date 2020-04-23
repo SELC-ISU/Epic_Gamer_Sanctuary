@@ -288,13 +288,26 @@ public class Yahtzee {
 		
 		singleSortDice();
 		
+		boolean result = true;
+		
 		for(int i = 0; i < 3; i++) {
 			if(dice[i]+1 != dice[i+1]) {
-				return false;
+				result = false;
+				break;
 			}
 		}
 		
-		return true;
+		if(!result) {
+			result = true;
+			for(int i = 1; i < 4; i++) {
+				if(dice[i]+1 != dice[i+1]) {
+					result = false;
+				}
+			}
+		}
+		
+		
+		return result;
 	}
 	
 	// input is ordered dice, if there is a repeating number move it to the end of the array
