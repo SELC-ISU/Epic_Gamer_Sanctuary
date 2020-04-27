@@ -3,6 +3,7 @@ package connectfour;
 public class ConnectFour {
 	 
 	private char[][] board = new char[6][7]; //6 rows; 7 columns
+	private boolean[][] highlights = new boolean[6][7];
 	private int turn;
 		
 	
@@ -61,6 +62,7 @@ public class ConnectFour {
 						}
 					}
 					if(count == 4) {
+						highlightWin(i, j, 1);
 						return 1;
 					}
 				}
@@ -79,6 +81,7 @@ public class ConnectFour {
 						}
 					}
 					if(count == 4) {
+						highlightWin(j, i, 2);
 						return 1;
 					}
 				}
@@ -99,6 +102,7 @@ public class ConnectFour {
 					}
 					
 					if(count == 4) {
+						highlightWin(j, k, 3);
 						return 1;
 					}
 				}
@@ -119,6 +123,7 @@ public class ConnectFour {
 					}
 					
 					if(count == 4) {
+						highlightWin(j+3, k, 4);
 						return 1;
 					}
 				}
@@ -149,6 +154,33 @@ public class ConnectFour {
 			
 		//tie
 		return 2;
+	}
+	
+	private void highlightWin(int x, int y, int dir) {
+		if(dir == 1) {
+			for(int i = 0; i < 4; i++) {
+				highlights[x][y+i] = true;
+			}
+		}
+		else if(dir == 2) {
+			for(int i = 0; i < 4; i++) {
+				highlights[x+i][y] = true;
+			}
+		}
+		else if(dir == 3) {
+			for(int i = 0; i < 4; i++) {
+				highlights[x+i][y+i] = true;
+			}
+		}
+		else if(dir == 4) {
+			for(int i = 0; i < 4; i++) {
+				highlights[x-i][y+i] = true;
+			}
+		}
+	}
+	
+	public boolean getHighlight(int x, int y) {
+		return highlights[x][y];
 	}
 	
 	public int whoWon() {
