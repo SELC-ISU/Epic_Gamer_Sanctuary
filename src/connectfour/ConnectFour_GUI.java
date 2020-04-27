@@ -15,6 +15,7 @@ public class ConnectFour_GUI {
 	JPanel panel1, panel2, panel3;
 	int turn;
 	ConnectFour game;
+	JButton replay;
 	
 	public ConnectFour_GUI() {
 		turn = 1;
@@ -86,6 +87,25 @@ public class ConnectFour_GUI {
 	public class ButtonActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int col = Integer.parseInt(((AbstractButton) e.getSource()).getName());
+			
+			if(col == 60) {
+				frame.remove(replay);
+				frame.add(panel3, BorderLayout.PAGE_END);
+				
+				enableButtons();
+				
+				clearBorders();
+				
+				game = new ConnectFour();
+				
+				updateBoard();
+				
+				turn = 1;
+				label.setText("Player " + turn + " it is your turn");
+				
+				return;
+			}
+			
 			col--;
 			
 			if(game.move(turn, col)) {
@@ -107,12 +127,41 @@ public class ConnectFour_GUI {
 					setWinHighlight();
 					
 					disableAllButtons();
+					
+					playAgain();
 				}
 				else if(game.gameOver() == 2) {
 					label.setText("The game ends in a tie");
+					
+					playAgain();
 				}
 			}
 		}
+	}
+	
+	private void clearBorders() {
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+		
+		for(int i = 0; i < gameLabels.length; i++) {
+			for(int j = 0; j < gameLabels[0].length; j++) {
+				gameLabels[i][j].setBorder(border);
+			}
+		}
+	}
+	
+	private void enableButtons() {
+		for(int i = 0; i < gameButtons.length; i++) {
+			gameButtons[i].setEnabled(true);
+		}
+	}
+	
+	private void playAgain() {
+		replay = new JButton("Click to play again");
+		replay.setName("60");
+		replay.addActionListener(new ButtonActionListener());
+		
+		frame.remove(panel3);
+		frame.add(replay, BorderLayout.PAGE_END);
 	}
 	
 	private void setWinHighlight() {
@@ -124,8 +173,7 @@ public class ConnectFour_GUI {
 					gameLabels[i][j].setBorder(border);
 				}
 			}
-		}
-		
+		}		
 	}
 	
 	private void disableAllButtons() {

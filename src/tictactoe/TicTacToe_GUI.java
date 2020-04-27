@@ -13,6 +13,7 @@ public class TicTacToe_GUI {
 	JPanel panel1, panel2;
 	int turn;
 	TicTacToe game;
+	JButton replay;
 	
 	public TicTacToe_GUI() {
 		turn = 1;
@@ -74,6 +75,25 @@ public class TicTacToe_GUI {
 	public class ButtonActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int spot = Integer.parseInt(((AbstractButton) e.getSource()).getName());
+			
+			if(spot == 20) {
+				frame.remove(replay);
+				
+				game = new TicTacToe();
+				
+				clearBorders();
+				
+				updateBoard();
+				
+				enableButtons();
+				
+				turn = 1;
+				
+				label.setText("Player " + turn + " it is your turn");
+				
+				return;
+			}
+			
 			spot--;
 			int x = spot % 3;
 			int y = spot / 3;
@@ -98,15 +118,45 @@ public class TicTacToe_GUI {
 					setWinHighlight();
 					
 					disableAllButtons();
+					
+					playAgain();
 				}
 				else if(game.gameOver() == 2) {
 					label.setText("The game ends in a tie");
+					
+					playAgain();
 				}
 			}
 			
 			
 			
 		}
+	}
+	
+	private void enableButtons() {
+		for(int i = 0; i < gameButtons.length; i++) {
+			for(int j = 0; j < gameButtons[0].length; j++) {
+				gameButtons[i][j].setEnabled(true);;
+			}
+		}
+	}
+	
+	private void clearBorders() {
+		Border border = BorderFactory.createLineBorder(Color.black, 1);
+
+		for(int i = 0; i < gameButtons.length; i++) {
+			for(int j = 0; j < gameButtons[0].length; j++) {
+				gameButtons[i][j].setBorder(border);
+			}
+		}
+	}
+	
+	private void playAgain() {
+		replay = new JButton("Click to play again");
+		replay.setName("20");
+		replay.addActionListener(new ButtonActionListener());
+		
+		frame.add(replay, BorderLayout.PAGE_END);
 	}
 	
 	private void setWinHighlight() {

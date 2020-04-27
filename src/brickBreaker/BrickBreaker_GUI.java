@@ -10,6 +10,11 @@ public class BrickBreaker_GUI extends JFrame implements Constants{
 	private static Dimension dim;
 	
 	public static void main(String[] args) {
+		BrickBreaker_GUI test = new BrickBreaker_GUI();
+	}
+	
+	public BrickBreaker_GUI() {
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}catch(Exception e) {
@@ -19,7 +24,7 @@ public class BrickBreaker_GUI extends JFrame implements Constants{
 		frame = new JFrame("Brick Breaker");
 		frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		board = new Board(WINDOW_WIDTH, WINDOW_HEIGHT);
 		
